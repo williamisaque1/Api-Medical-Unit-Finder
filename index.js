@@ -20,7 +20,7 @@ app.post("/cordenadas", async (req, res) => {
     );
 
     arraydeinformacoes = [...informacao.data];
-    // console.log(arraydeinformacoes);
+    // console.log(arraydeinformacoes) ;
     for (let i = 0; i < arraydeinformacoes.length; i++) {
       //console.log(arraydeinformacoes[i]);
       if (
