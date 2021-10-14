@@ -11,27 +11,34 @@ app.post("/cordenadas", async (req, res) => {
   console.time("tempo");
   let arraydeinformacoes = [];
   let endereco = [];
-  const { latitude, longitude } = req.body;
+  //console.log(req.body.km);
+  const { latitude, longitude } = req.body.origin;
   console.log("resultado " + latitude + "|" + longitude);
   try {
     let informacao = await axios.get(
-      `http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/latitude/${latitude}/longitude/${longitude}/raio/10/?categoria=CL%C3%8DNICA`
+      `http://mobile-aceite.tcu.gov.br/mapa-da-saude/rest/estabelecimentos/latitude/${latitude}/longitude/${longitude}/raio/${req.body.km}/?categoria=CL%C3%8DNICA`
     );
 
     arraydeinformacoes = [...informacao.data];
     // console.log(arraydeinformacoes);
     for (let i = 0; i < arraydeinformacoes.length; i++) {
-      //  console.log(arraydeinformacoes.data[i].lat);
-
-      endereco.push([
-        arraydeinformacoes[i]?.logradouro +
-          " " +
-          arraydeinformacoes[i]?.numero +
-          " " +
-          arraydeinformacoes[i]?.bairro +
-          " " +
-          arraydeinformacoes[i]?.cidade,
-      ]);
+      //console.log(arraydeinformacoes[i]);
+      if (
+        arraydeinformacoes[i].logradouro ||
+        arraydeinformacoes[i].numero ||
+        arraydeinformacoes[i].bairro ||
+        arraydeinformacoes[i].cidade
+      ) {
+        endereco.push([
+          arraydeinformacoes[i]?.logradouro +
+            " " +
+            arraydeinformacoes[i]?.numero +
+            " " +
+            arraydeinformacoes[i]?.bairro +
+            " " +
+            arraydeinformacoes[i]?.cidade,
+        ]);
+      }
     }
 
     function sequencia(n) {
@@ -50,9 +57,10 @@ app.post("/cordenadas", async (req, res) => {
 
       return data;
     }
-
+    // console.log(sequencia(endereco.length));
     const request = sequencia(endereco.length).map(loadData);
 
+    // console.log((await request[1]).data.results[0].formatted_address);
     Promise.all(request)
       .then((value) => {
         value.forEach((element, index) => {
@@ -83,5 +91,5 @@ app.post("/cordenadas", async (req, res) => {
 });
 
 app.listen(process.env.PORT || "8000", () => {
-  console.log("server iniciado na porta 8080");
+  console.log("server iniciado na porta 8000");
 });
