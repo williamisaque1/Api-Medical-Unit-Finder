@@ -11,7 +11,7 @@ app.post("/cordenadas", async (req, res) => {
   console.time("tempo");
   let arraydeinformacoes = [];
   let endereco = [];
-  //console.log(req.body.km);
+  console.log(req.body.km);
   const { latitude, longitude } = req.body.origin;
   console.log("resultado " + latitude + "|" + longitude);
   try {
