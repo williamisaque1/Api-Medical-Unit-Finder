@@ -540,7 +540,7 @@ app.post("/cordenadas", async (req, res) => {
   console.log("essa e a resposta do usuario:", especialidade);
   //cardiologista
   let results = await axios.get(
-    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=-${latitude}%2C${longitude}&query=${especialidade}&radius=${
+    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${latitude}%2C${longitude}&query=${especialidade}&radius=${
       km * 1000
     }&key=${process.env.GOOGLE_API_KEY}`
   );
