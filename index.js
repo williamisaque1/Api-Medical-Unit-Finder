@@ -768,7 +768,7 @@ app.post("/cordenadas", async (req, res) => {
   }
   async function loadData() {
     let data = [];
-    let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    let origin = { latitude: -23.0151, longitude: -45.5584 };
     for (let element = 0; element < results.data.results.length; element++) {
       /* console.log(
         resultado[element].endereco
