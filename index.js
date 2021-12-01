@@ -832,7 +832,7 @@ app.post("/cordenadas", async (req, res) => {
       });
     })
     .catch((e) => {
-      res.status(401).send("erro");
+      res.status(401).send(e);
     });
 });
 /*
