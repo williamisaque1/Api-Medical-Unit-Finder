@@ -779,14 +779,17 @@ app.post("/cordenadas", async (req, res) => {
           resultado[element].long
       );*/
       console.log("resultado lat", resultado[element].lat);
+      console.log("resultado long", resultado[element].long);
       console.log("latitude", latitude);
+      console.log("longitude", longitude);
       data.push(
         axios.get(
-          `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},$&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},${longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
         )
       );
     }
     console.log("sdss0", data);
+    console.log("sss", await data[0].data);
     return data;
   }
   var arraydistancia = [];
