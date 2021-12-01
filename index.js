@@ -792,7 +792,7 @@ app.post("/cordenadas", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-
+      console.log("dsd", value.data[0]);
       value.forEach((element, index) => {
         console.log(element.data.routes[0].legs[0].distance);
         if (km >= element.data.routes[0].legs[0].distance.value) {
