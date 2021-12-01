@@ -800,6 +800,7 @@ app.post("/cordenadas", async (req, res) => {
             id: index,
             texto: element.data.routes[0].legs[0].distance.value,
           });
+          console.log("passei", element.data.routes[0].legs[0].distance.value);
         }
       });
 
