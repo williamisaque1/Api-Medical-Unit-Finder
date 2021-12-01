@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
   // console.log("essa e a resposta do usuario:", especialidade);
   //cardiologista
   let results = await axios.get(
-    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=-23.0101811%2C-45.5583074&query=clinico&key=${process.env.GOOGLE_API_KEY}`
+    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=-23.01022455C-45.5560958&query=clinico&radius=2000&key=${process.env.GOOGLE_API_KEY}`
   );
   //console.log(results.data);
   //res.send("seja bem vindo");
@@ -846,7 +846,7 @@ app.post("/cordenadas", async (req, res) => {
       });
     })
     .catch((e) => {
-      res.status(404).send("erro");
+      res.status(404).send([]);
     });
 });
 
