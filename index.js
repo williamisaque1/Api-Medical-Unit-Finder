@@ -744,9 +744,16 @@ app.post("/cordenadas", async (req, res) => {
       en = "numero";
     }
     //isNaN(end[0].slice(0, 1) )
-    console.log("latitude$", results.data.results[0].geometry.location.lat);
-    console.log("longitude$", results.data.results[0].geometry.location.lng);
-console.log("NOME",results.data.results[element].name)
+    console.log("minha latitude", latitude + "," + longitude);
+    console.log(
+      "latitude$",
+      results.data.results[element].geometry.location.lat
+    );
+    console.log(
+      "longitude$",
+      results.data.results[element].geometry.location.lng
+    );
+    console.log("NOME", results.data.results[element].name);
     resultado.push({
       nomeFantasia: results.data.results[element].name,
       avaliação: results.data.results[element].rating,
