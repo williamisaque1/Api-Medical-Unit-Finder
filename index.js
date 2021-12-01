@@ -18,7 +18,8 @@ app.get("/", async (req, res) => {
   //console.log(results.data);
   //res.send("seja bem vindo");
   let resultado = [];
-  function getDistanceFromLatLonInKm(position1, position2) {
+  var km = 3000;
+  /* function getDistanceFromLatLonInKm(position1, position2) {
     "use strict";
     var deg2rad = function (deg) {
         return deg * (Math.PI / 180);
@@ -34,7 +35,7 @@ app.get("/", async (req, res) => {
           Math.sin(dLng / 2),
       c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return (R * c * 1000).toFixed();
-  }
+  }*/
 
   const siglasEstados = [
     "AC",
@@ -104,7 +105,7 @@ app.get("/", async (req, res) => {
     let n = "erro";
     let bairro = "erro";
     let cidade = "erro";
-    var distancia = getDistanceFromLatLonInKm(
+    /*  var distancia = getDistanceFromLatLonInKm(
       { lat: -23.0101811, lng: -45.5583074 },
       {
         lat: results.data.results[element].geometry.location.lat,
@@ -112,6 +113,7 @@ app.get("/", async (req, res) => {
       }
     );
     console.log("distanciaa " + (distancia / 1000).toFixed(2) + " Km");
+  */
 
     //console.log("qdqd", sequencia(results2).length);
 
@@ -301,7 +303,73 @@ app.get("/", async (req, res) => {
     });
   }
 
-  res.status(200).json(resultado);
+  async function loadData() {
+    let data = [];
+    let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    for (let element = 0; element < results.data.results.length; element++) {
+      /* console.log(
+        resultado[element].endereco
+          .replaceAll(",", "")
+          .replaceAll("-", "")
+          .replaceAll(".", "") +
+          "|" +
+          resultado[element].long
+      );*/
+      data.push(
+        axios.get(
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+        )
+      );
+    }
+    console.log("sdss0", data);
+    return data;
+  }
+  var arraydistancia = [];
+
+  Promise.all(await loadData())
+    .then((value) => {
+      console.log("places  ", value.length);
+
+      value.forEach((element, index) => {
+        //  console.log(element.data.routes[0].legs[0].distance);
+        if (km >= element.data.routes[0].legs[0].distance.value) {
+          arraydistancia.push({
+            id: index,
+            texto: element.data.routes[0].legs[0].distance.value,
+          });
+        }
+      });
+
+      console.log(arraydistancia);
+      arraydistancia = arraydistancia.sort((a, b) => a.texto - b.texto);
+      console.log(arraydistancia);
+      let i = 0;
+      let j = 0;
+      var resultado2 = [];
+      console.log(resultado[0].nomeFantasia);
+      var u = setInterval(() => {
+        if (i < resultado.length) {
+          if (arraydistancia[j]?.id == i) {
+            console.log(
+              arraydistancia[j].texto + "|" + resultado[i].nomeFantasia
+            );
+            resultado2.push(resultado[i]);
+          }
+          i++;
+        } else {
+          if (j < resultado.length - 1) {
+            j++;
+            i = 0;
+          } else {
+            clearInterval(u);
+            res.status(200).json(resultado2);
+          }
+        }
+      });
+    })
+    .catch((e) => {
+      res.status(404).send("erro");
+    });
 });
 
 ///////////////////////////////////////////////////////
@@ -698,8 +766,73 @@ app.post("/cordenadas", async (req, res) => {
       places_id: results.data.results[element].place_id,
     });
   }
+  async function loadData() {
+    let data = [];
+    let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    for (let element = 0; element < results.data.results.length; element++) {
+      /* console.log(
+        resultado[element].endereco
+          .replaceAll(",", "")
+          .replaceAll("-", "")
+          .replaceAll(".", "") +
+          "|" +
+          resultado[element].long
+      );*/
+      data.push(
+        axios.get(
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+        )
+      );
+    }
+    console.log("sdss0", data);
+    return data;
+  }
+  var arraydistancia = [];
 
-  res.status(200).json(resultado);
+  Promise.all(await loadData())
+    .then((value) => {
+      console.log("places  ", value.length);
+
+      value.forEach((element, index) => {
+        //  console.log(element.data.routes[0].legs[0].distance);
+        if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
+          arraydistancia.push({
+            id: index,
+            texto: element.data.routes[0].legs[0].distance.value,
+          });
+        }
+      });
+
+      console.log(arraydistancia);
+      arraydistancia = arraydistancia.sort((a, b) => a.texto - b.texto);
+      console.log(arraydistancia);
+      let i = 0;
+      let j = 0;
+      var resultado2 = [];
+      console.log(resultado[0].nomeFantasia);
+      var u = setInterval(() => {
+        if (i < resultado.length) {
+          if (arraydistancia[j]?.id == i) {
+            console.log(
+              arraydistancia[j].texto + "|" + resultado[i].nomeFantasia
+            );
+            resultado2.push(resultado[i]);
+          }
+          i++;
+        } else {
+          if (j < resultado.length - 1) {
+            j++;
+            i = 0;
+          } else {
+            clearInterval(u);
+            res.status(200).json(resultado2);
+          }
+        }
+      });
+    })
+    .catch((e) => {
+      res.status(404).send("erro");
+    });
 });
 /*
 app.post("/cordenadas", async (req, res) => {
