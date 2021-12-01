@@ -766,6 +766,7 @@ app.post("/cordenadas", async (req, res) => {
       places_id: results.data.results[element].place_id,
     });
   }
+  console.log("array antigo", resultado[0]);
   async function loadData() {
     let data = [];
     let origin = { latitude: -23.0101811, longitude: -45.5583074 };
