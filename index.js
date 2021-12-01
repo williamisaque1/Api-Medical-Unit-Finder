@@ -780,7 +780,7 @@ app.post("/cordenadas", async (req, res) => {
       );*/
       data.push(
         axios.get(
-          `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.longitude},${origin.longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+          `https://maps.googleapis.com/maps/api/directions/json?origin=-23.023689,-45.55599&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
         )
       );
     }
