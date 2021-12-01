@@ -770,6 +770,9 @@ app.post("/cordenadas", async (req, res) => {
   async function loadData() {
     let data = [];
     //let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    console.log("origin lat", latitude);
+    console.log(process.env.GOOGLE_API_KEY);
+    console.log(resultado[0].long);
     for (let element = 0; element < results.data.results.length; element++) {
       /* console.log(
         resultado[element].endereco
@@ -779,7 +782,7 @@ app.post("/cordenadas", async (req, res) => {
           "|" +
           resultado[element].long
       );*/
-      console.log("origin lat", latitude);
+
       data.push(
         axios.get(
           `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},${longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
