@@ -768,7 +768,7 @@ app.post("/cordenadas", async (req, res) => {
   }
   async function loadData() {
     let data = [];
-    let origin = { latitude: -23.0151, longitude: -45.5584 };
+    let origin = { latitude: -23.0101811, longitude: -45.5583074 };
     for (let element = 0; element < results.data.results.length; element++) {
       /* console.log(
         resultado[element].endereco
@@ -778,18 +778,13 @@ app.post("/cordenadas", async (req, res) => {
           "|" +
           resultado[element].long
       );*/
-      console.log("resultado lat", resultado[element].lat);
-      console.log("resultado long", resultado[element].long);
-      console.log("latitude", latitude);
-      console.log("longitude", longitude);
       data.push(
         axios.get(
-          `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},${longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
         )
       );
     }
     console.log("sdss0", data);
-    console.log("array detalhes", await data[0].data);
     return data;
   }
   var arraydistancia = [];
@@ -797,15 +792,10 @@ app.post("/cordenadas", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-      console.log("dsd", value[0].data);
-      console.log("dsd", value[1].data);
+
       value.forEach((element, index) => {
-        console.log(
-          "dentro do for each",
-          element.data.routes[0].legs[0].distance
-        );
-        console.log("elemento.data", element.data);
-        if (km >= element.data.routes[0].legs[0].distance.value) {
+        //  console.log(element.data.routes[0].legs[0].distance);
+        if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
             texto: element.data.routes[0].legs[0].distance.value,
