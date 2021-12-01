@@ -847,7 +847,9 @@ app.post("/cordenadas", async (req, res) => {
     })
     .catch((e) => {
       if (arraydistancia.length == 0) {
-        throw res.status(404).send("não foi possivel localizar a unidade");
+        res.status(404);
+      } else {
+        res.status(500);
       }
     });
 });
