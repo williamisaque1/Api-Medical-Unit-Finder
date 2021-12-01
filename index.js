@@ -806,10 +806,10 @@ app.post("/cordenadas", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-
+      console.log(value[0].data);
       value.forEach((element, index) => {
         //  console.log(element.data.routes[0].legs[0].distance);
-        if (km >= element.data.routes[0].legs[0].distance.value) {
+        if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
             texto: element.data.routes[0].legs[0].distance.value,
