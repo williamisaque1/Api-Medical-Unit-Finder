@@ -783,6 +783,9 @@ app.post("/cordenadas", async (req, res) => {
           `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},${longitude}&destination=${resultado[0].lat},${resultado[0].long}&key=${process.env.GOOGLE_API_KEY}`
         )
       );
+      console.log(
+        `${resultado[0].lat},${resultado[0].long},${latitude},${longitude}`
+      );
     }
     console.log("sdss0", data);
     return data;
