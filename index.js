@@ -846,7 +846,7 @@ app.post("/cordenadas", async (req, res) => {
       });
     })
     .catch((e) => {
-      res.status(404).send([]);
+      res.status(404).json([]);
     });
 });
 
