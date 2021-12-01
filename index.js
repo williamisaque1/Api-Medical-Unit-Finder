@@ -794,7 +794,7 @@ app.post("/cordenadas", async (req, res) => {
       console.log("places  ", value.length);
       console.log("km", km);
       value.forEach((element, index) => {
-        //  console.log(element.data.routes[0].legs[0].distance);
+        console.log(element.data.routes[0].legs[0].distance);
         if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
