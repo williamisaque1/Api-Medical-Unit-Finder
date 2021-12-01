@@ -779,7 +779,7 @@ app.post("/cordenadas", async (req, res) => {
   }
   async function loadData() {
     let data = [];
-    let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    //let origin = { latitude: -23.0101811, longitude: -45.5583074 };
     for (let element = 0; element < results.data.results.length; element++) {
       /* console.log(
         resultado[element].endereco
@@ -810,7 +810,6 @@ app.post("/cordenadas", async (req, res) => {
       console.log(km * 1000);
 
       value.forEach((element, index) => {
-        console.log("array", element.data.routes[0].legs[0].distance.value);
         //  console.log(element.data.routes[0].legs[0].distance);
         if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
