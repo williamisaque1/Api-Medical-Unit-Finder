@@ -772,8 +772,9 @@ app.post("/cordenadas", async (req, res) => {
     //let origin = { latitude: -23.0101811, longitude: -45.5583074 };
     console.log("origin lat", latitude);
     console.log(process.env.GOOGLE_API_KEY);
-    console.log(resultado[0].long);
+
     for (let element = 0; element < results.data.results.length; element++) {
+      console.log(resultado[element]);
       /* console.log(
         resultado[element].endereco
           .replaceAll(",", "")
