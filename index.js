@@ -847,9 +847,9 @@ app.post("/cordenadas", async (req, res) => {
     })
     .catch((e) => {
       if (arraydistancia.length == 0) {
-        res.status(404).json({ erro: "não foi posssivel achar a unidade" });
+        res.status(404).send("não foi posssivel achar a unidade");
       } else {
-        res.status(500).json({ erro: "erro interno do servidor" });
+        res.status(500).send("erro interno do servidor");
       }
     });
 });
