@@ -792,7 +792,7 @@ app.post("/cordenadas", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-
+      console.log("km", km);
       value.forEach((element, index) => {
         //  console.log(element.data.routes[0].legs[0].distance);
         if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
@@ -832,7 +832,7 @@ app.post("/cordenadas", async (req, res) => {
       });
     })
     .catch((e) => {
-      res.status(404).send("erro");
+      res.status(401).send("erro");
     });
 });
 /*
