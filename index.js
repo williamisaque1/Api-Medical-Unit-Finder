@@ -795,7 +795,7 @@ app.post("/cordenadas", async (req, res) => {
         )
       );
       console.log(
-        `${resultado[0].lat},${resultado[0].long},${latitude},${longitude}`
+        ` nome: ${resultado[element].name}${resultado[0].lat},${resultado[0].long},${latitude},${longitude}`
       );
     }
     console.log("sdss0", data);
