@@ -744,6 +744,7 @@ app.post("/cordenadas", async (req, res) => {
       en = "numero";
     }
     //isNaN(end[0].slice(0, 1) )
+    /*
     console.log("minha latitude", latitude + "," + longitude);
     console.log(
       "latitude$",
@@ -754,6 +755,7 @@ app.post("/cordenadas", async (req, res) => {
       results.data.results[element].geometry.location.lng
     );
     console.log("NOME", results.data.results[element].name);
+    */
     resultado.push({
       nomeFantasia: results.data.results[element].name,
       avaliação: results.data.results[element].rating,
@@ -804,10 +806,10 @@ app.post("/cordenadas", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-      console.log(value[0].data);
+
       value.forEach((element, index) => {
         //  console.log(element.data.routes[0].legs[0].distance);
-        if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
+        if (km >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
             texto: element.data.routes[0].legs[0].distance.value,
