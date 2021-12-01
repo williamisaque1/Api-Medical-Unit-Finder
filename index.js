@@ -303,10 +303,15 @@ app.get("/", async (req, res) => {
     });
   }
 
+  console.log("array antigo", resultado[0]);
   async function loadData() {
     let data = [];
     let origin = { latitude: -23.0101811, longitude: -45.5583074 };
+    console.log("origin lat", latitude);
+    console.log(process.env.GOOGLE_API_KEY);
+
     for (let element = 0; element < results.data.results.length; element++) {
+      console.log(resultado[element]);
       /* console.log(
         resultado[element].endereco
           .replaceAll(",", "")
@@ -315,6 +320,7 @@ app.get("/", async (req, res) => {
           "|" +
           resultado[element].long
       );*/
+
       data.push(
         axios.get(
           `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
@@ -329,14 +335,16 @@ app.get("/", async (req, res) => {
   Promise.all(await loadData())
     .then((value) => {
       console.log("places  ", value.length);
-
+      console.log("valor", value[0].data);
+      console.log("km", km);
       value.forEach((element, index) => {
-        //  console.log(element.data.routes[0].legs[0].distance);
-        if (km >= element.data.routes[0].legs[0].distance.value) {
+        console.log(element.data.routes[0].legs[0].distance);
+        if (km * 1000 >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
             texto: element.data.routes[0].legs[0].distance.value,
           });
+          console.log("passei", element.data.routes[0].legs[0].distance.value);
         }
       });
 
@@ -368,7 +376,7 @@ app.get("/", async (req, res) => {
       });
     })
     .catch((e) => {
-      res.status(404).send("erro");
+      res.status(401).send(e);
     });
 });
 
