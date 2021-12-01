@@ -778,9 +778,11 @@ app.post("/cordenadas", async (req, res) => {
           "|" +
           resultado[element].long
       );*/
+      console.log("resultado lat", resultado[element].lat);
+      console.log("latitude", latitude);
       data.push(
         axios.get(
-          `https://maps.googleapis.com/maps/api/directions/json?origin=-23.023689,-45.55599&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
+          `https://maps.googleapis.com/maps/api/directions/json?origin=${latitude},$&destination=${resultado[element].lat},${resultado[element].long}&key=${process.env.GOOGLE_API_KEY}`
         )
       );
     }
@@ -793,9 +795,13 @@ app.post("/cordenadas", async (req, res) => {
     .then((value) => {
       console.log("places  ", value.length);
       console.log("dsd", value[0].data);
-      console.log("dsd", value.data);
+      console.log("dsd", value[1].data);
       value.forEach((element, index) => {
-        console.log(element.data.routes[0].legs[0].distance);
+        console.log(
+          "dentro do for each",
+          element.data.routes[0].legs[0].distance
+        );
+        console.log("elemento.data", element.data);
         if (km >= element.data.routes[0].legs[0].distance.value) {
           arraydistancia.push({
             id: index,
