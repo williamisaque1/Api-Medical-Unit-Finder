@@ -789,7 +789,7 @@ app.post("/cordenadas", async (req, res) => {
       );
     }
     console.log("sdss0", data);
-    console.log("sss", await data[0].data);
+    console.log("array detalhes", await data[0].data);
     return data;
   }
   var arraydistancia = [];
