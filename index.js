@@ -406,7 +406,7 @@ app.post("/detalhamento", async (req, res) => {
             parseInt(busca.slice(index - 2, index).trim()) + 12
           }${busca.slice(index, index + 4)}`;
 
-          busca = busca.replace(n, soma).trim();
+          busca = busca.replace(`${n} PM`, soma).trim();
         } else {
           if (busca.slice(index - 5, index).includes("PM")) {
             soma = `${
@@ -456,7 +456,7 @@ app.get("/detalhamento", async (req, res) => {
   console.log("places id com numero ", places_id);
 
   const detalhes = await axios.get(
-    `https://maps.googleapis.com/maps/api/place/details/json?fields=name,address_components,formatted_phone_number,opening_hours&place_id=ChIJ23jveZT5zJQRyEdWK4i6LQY&key=${process.env.GOOGLE_API_KEY}`
+    `https://maps.googleapis.com/maps/api/place/details/json?fields=name,address_components,formatted_phone_number,opening_hours&place_id=ChIJ25jXtI77zJQRF_BoWiuLGP8&key=${process.env.GOOGLE_API_KEY}`
   );
   //const regex = /(([0-2]|0?[1-9]):([0-5][0-9]))/g;
   //var myArray = regex.exec(detalhes.data.result.opening_hours?.weekday_text[0]);
@@ -480,6 +480,7 @@ app.get("/detalhamento", async (req, res) => {
         if (i == detalhes.data.result.opening_hours?.weekday_text.length - 3) {
           contador = contador + 1;
         }
+
         if (busca.slice(index - 3, index + 6).includes("PM")) {
           let n = busca.slice(index - 2, index + 4).trim();
 
@@ -487,7 +488,7 @@ app.get("/detalhamento", async (req, res) => {
             parseInt(busca.slice(index - 2, index).trim()) + 12
           }${busca.slice(index, index + 4)}`;
 
-          busca = busca.replace(n, soma).trim();
+          busca = busca.replace(`${n} PM`, soma).trim();
         } else {
           if (busca.slice(index - 5, index).includes("PM")) {
             soma = `${
@@ -496,6 +497,8 @@ app.get("/detalhamento", async (req, res) => {
             n = busca.slice(index - 2, index + 4).trim();
 
             busca = busca.replace(n, soma);
+          } else {
+            busca.slice(index - 2, index).trim() < 12;
           }
         }
       }
